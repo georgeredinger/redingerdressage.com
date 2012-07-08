@@ -1,3 +1,8 @@
+<?php 
+  //no comments for us
+  return false;
+?>
+
 <?php
 /**
  * The template for displaying Comments.
