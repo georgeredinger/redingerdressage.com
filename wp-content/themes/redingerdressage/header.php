@@ -92,7 +92,8 @@
 							$header_image_height = HEADER_IMAGE_HEIGHT;
 						}
 					?>
-<img src="http://farm7.staticflickr.com/6239/6289668195_5fbccf1924_b.jpg" width=940px>
+<!-- <img src="http://farm7.staticflickr.com/6239/6289668195_5fbccf1924_b.jpg" width=940px> -->
+<img src="http://farm7.staticflickr.com/6230/6289737547_71299f6007_b.jpg  width=940px>
 <!--						<img src="<?php header_image(); ?>" width="<?php echo $header_image_width; ?>" height="<?php echo $header_image_height; ?>" alt="" /> -->
 					<?php endif; ?>
 			</div><!-- #branding -->
