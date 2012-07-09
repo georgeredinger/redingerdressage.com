@@ -31,6 +31,7 @@ namespace :deploy do
 		transaction do
 			update_code
 			create_symlink
+		  upload_htaccess
 		end
 	end
 
@@ -46,7 +47,6 @@ desc "upload .htaccess to remote"
 	end
 
 	task :after_deploy do
-		upload_htaccess
 		cleanup
 	end
   
