@@ -5,7 +5,7 @@ Redinger Dressage Wordpress site
 
 ++ sync code and db and system dependancies such as names and passwords for db.
 on source machine
-mysqldump  -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage > redingerdressage.sql
+mysqldump --add-drop-table  -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage > redingerdressage.sql
 scp redingerdressage.sql george@rd.redinger.me:/home/george/
 
 mysql -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage < redingerdressage.sql
