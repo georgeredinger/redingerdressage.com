@@ -5,10 +5,10 @@ Redinger Dressage Wordpress site
 
 ++ sync code and db and system dependancies such as names and passwords for db.
 on source machine
-mysqldump -u [uname] -p[pass] [dbname] > [backupfile.sql]
- transfer backupfile.sql to dest machine
-then, on destination machine.
-mysql - u [uname] -p[pass] [dbname] < [backfile.sql]
+mysqldump  -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage > redingerdressage.sql
+scp redingerdressage.sql george@rd.redinger.me:/home/george/
+
+mysql -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage < redingerdressage.sql
 
 * google calendar with list of upcomming events
 * contact form with google map
