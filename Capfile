@@ -39,16 +39,17 @@ namespace :deploy do
 		strategy.deploy!
 	end
 
+desc "upload .htaccess to remote"
+	task :upload_htaccess do
+		puts ("scp .htaccess  #{user}@#{domain}:#{current_path}/.htaccess")
+		system ("scp .htaccess  george@#{domain}:#{current_path}/.htaccess")
+	end
+
 	task :after_deploy do
-		copy_htaccess
+		upload_htaccess
 		cleanup
 	end
-
-	task :copy_htaccess do
-		puts "uploading .htaccess"
-		upload(".htaccess", "/home/george/workspace/redingerdressage.com/current/.htaccess", :via => :scp)
-	end
-
+  
 	task :after_symlink do
 		run "ln -nfs #{shared_path}/uploads/" \
 			" #{current_path}/wp-content/uploads"
