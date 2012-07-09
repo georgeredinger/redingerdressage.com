@@ -40,7 +40,13 @@ namespace :deploy do
 	end
 
 	task :after_deploy do
+		copy_htaccess
 		cleanup
+	end
+
+	task :copy_htaccess do
+		puts "uploading .htaccess"
+		upload(".htaccess", "/home/george/workspace/redingerdressage.com/current/.htaccess", :via => :scp)
 	end
 
 	task :after_symlink do
