@@ -82,7 +82,7 @@ desc "upload .htaccess to remote"
 		# Build out temporary file name with timestamp for uniqueness
 		timestamp = get_timestamp
 		temp_file_name = "database_dump_#{timestamp}"
-
+#sed "s/http:\/\/redingerdressage/http:\/\/rd.redinger.me/g" redingerdressage.sql > rd.redinger.me.sql
 		remote_file_name = remote_myldump(temp_file_name)
 
 		download(remote_fe_name, "/tmp/#{temp_file_name}.sql.gz")

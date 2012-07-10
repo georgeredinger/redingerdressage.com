@@ -1,3 +1,3 @@
 #!/bin/bash
-scp redingerdressage.sql george@chicago.redinger.me:/home/george/workspace/redingerdressage.com
+scp rd.redinger.me.sql george@chicago.redinger.me:/home/george/workspace/redingerdressage.com/current/current
 
