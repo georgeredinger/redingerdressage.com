@@ -78,6 +78,7 @@ desc "upload .htaccess to remote"
 	end
 	desc "Push a database dump from local server,  to the remote server and import to on the remote"
 	task :push_database_to_remote do
+		#need db username and password
 		# Build out temporary file name with timestamp for uniqueness
 		timestamp = get_timestamp
 		temp_file_name = "database_dump_#{timestamp}"
