@@ -81,12 +81,12 @@ desc "upload .htaccess to remote"
 	end
 	desc "Push a database dump from local server,  to the remote server and import to on the remote"
 	task :push_database_to_remote do
-	system "source ~/Dropbox/secrets.sh"
+	system "~/Dropbox/secrets.sh"
   system "mysqldump --add-drop-table  -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage > redingerdressage.sql"
  system 'sed "s/http:\/\/redingerdressage/http:\/\/rd.redinger.me/g" redingerdressage.sql > rd.redinger.me.sql'
 system "scp rd.redinger.me.sql george@chicago.redinger.me:/home/george/workspace/redingerdressage.com/current/"
-run "source ~/Dropbox/secrets.sh"
-run "mysql -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage < rd.redinger.me.sql"
+run "~/Dropbox/secrets.sh"
+run "mysql -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage < #{deploy_to}/rd.redinger.me.sql"
 
 	end
 
