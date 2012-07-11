@@ -43,7 +43,10 @@ namespace :deploy do
 desc "upload .htaccess to remote"
 	task :upload_htaccess do
 		puts ("scp .htaccess  #{user}@#{domain}:#{current_path}/.htaccess")
-		system ("scp .htaccess  george@#{domain}:#{current_path}/.htaccess")
+		system ("scp .htaccess  #{user}@#{domain}:#{current_path}/.htaccess")
+		#sudo chown -v :www-data "/enterYourFilePathHere/.htaccess"
+		#sudo chmod -v 664 "/enterYourFilePathHere/.htaccess"
+
 	end
 
 	task :after_deploy do
@@ -78,26 +81,13 @@ desc "upload .htaccess to remote"
 	end
 	desc "Push a database dump from local server,  to the remote server and import to on the remote"
 	task :push_database_to_remote do
-		#need db username and password
-		# Build out temporary file name with timestamp for uniqueness
-		timestamp = get_timestamp
-		temp_file_name = "database_dump_#{timestamp}"
-#sed "s/http:\/\/redingerdressage/http:\/\/rd.redinger.me/g" redingerdressage.sql > rd.redinger.me.sql
-		remote_file_name = remote_myldump(temp_file_name)
+	system "source ~/Dropbox/secrets.sh"
+  system "mysqldump --add-drop-table  -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage > redingerdressage.sql"
+ system 'sed "s/http:\/\/redingerdressage/http:\/\/rd.redinger.me/g" redingerdressage.sql > rd.redinger.me.sql'
+system "scp rd.redinger.me.sql george@chicago.redinger.me:/home/george/workspace/redingerdressage.com/current/"
+run "source ~/Dropbox/secrets.sh"
+run "mysql -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage < rd.redinger.me.sql"
 
-		download(remote_fe_name, "/tmp/#{temp_file_name}.sql.gz")
-
-		system("gunzip /tmp/#{temp_file_name}.sql.gz")
-
-		# You may need to modify some of the data to match local URLs here
-		# system(%Q{sed -i -e "s@http://remote.url/@http://local.url/@g" /tmp/#{temp_file_name}.sql})
-
-		puts "pending...Backing up previous database to /tmp/previous_database_#{timestamp}.sql.gz"
-		system("mysqldump -uroot local_database_name | gzip -9 > /tmp/previous_database_#{timestamp}.sql.gz")
-		system("mysql -uroot local_database_name < /tmp/#{temp_file_name}.sql")
-		system("rm -rf /tmp/#{temp_file_name}*")
-
-		run "rm -rf #{deploy_to}/#{shared_dir}/#{temp_file_name}.tar.gz"
 	end
 
 	desc "Push all images from local, backup remote images, and copy local images into remote install"
