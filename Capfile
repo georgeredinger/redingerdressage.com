@@ -2,7 +2,7 @@ require 'capistrano/version'
 load 'deploy'
 
 # You need to fill in the 2 vars below
-set :domain,  "rd.redinger.me"
+set :domain,  "redingerdressage.com"
 set :user,    "george"
 set :application, "redingerdressage.com"
 set :repository, "git@github.com:georgeredinger/redingerdressage.com.git"
@@ -83,10 +83,10 @@ desc "upload .htaccess to remote"
 	task :push_database_to_remote do
 	system "~/Dropbox/secrets.sh"
   system "mysqldump --add-drop-table  -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage > redingerdressage.sql"
- system 'sed "s/http:\/\/redingerdressage/http:\/\/rd.redinger.me/g" redingerdressage.sql > rd.redinger.me.sql'
-system "scp rd.redinger.me.sql george@chicago.redinger.me:/home/george/workspace/redingerdressage.com/current/"
+ system 'sed "s/http:\/\/redingerdressage/http:\/\/redingerdressage.com/g" redingerdressage.sql > redingerdressage.com.sql'
+system "scp redingerdressage.com.sql george@chicago.redinger.me:/home/george/workspace/redingerdressage.com/current/"
 run "~/Dropbox/secrets.sh"
-run "mysql -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage < #{deploy_to}/rd.redinger.me.sql"
+run "mysql -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage < #{deploy_to}/redingerdressage.com.sql"
 
 	end
 
