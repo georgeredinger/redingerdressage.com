@@ -1,9 +1,9 @@
 <?php
 
 define('BASE_URL', plugins_url() . '/' . basename(dirname(__FILE__)));
-define('SITE_URL', get_option('siteurl'));
+define('SITE_URL', site_url());
 define('DEBUG', false);
-define('VERSION', '3.3.4');
+define('VERSION', '3.3.6');
 
 $afg_sort_order_map = array(
     'default' => 'Default',
@@ -18,6 +18,7 @@ $afg_sort_order_map = array(
 $afg_slideshow_map = array(
     'default' => 'Default',
     'colorbox' => 'Colorbox',
+    'highslide' => 'Highslide',
     'disable' => 'No Slideshow',
     'flickr' => 'Link to Flickr Photo page',
     'none' => 'No Slideshow and No Link',
@@ -109,6 +110,14 @@ $afg_text_color_map = array(
     'White' => 'Black',
 );
 
+function afg_get_cur_url() {
+    $isHTTPS = (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on");
+    $port = (isset($_SERVER["SERVER_PORT"]) && ((!$isHTTPS && $_SERVER["SERVER_PORT"] != "80") || ($isHTTPS && $_SERVER["SERVER_PORT"] != "443")));
+    $port = ($port) ? ':'.$_SERVER["SERVER_PORT"] : '';
+    $url = ($isHTTPS ? 'https://' : 'http://').$_SERVER["HTTP_HOST"].$port.$_SERVER["REQUEST_URI"];
+    return $url;
+}
+
 function create_afgFlickr_obj() {
     global $pf;
     unset($_SESSION['afgFlickr_auth_token']);
@@ -182,7 +191,7 @@ function afg_generate_version_line() {
         " <a href=\"http://wordpress.org/extend/plugins/awesome-flickr-gallery-plugin/faq/\">FAQ</a> |" .
         " <a href=\"http://wordpress.org/extend/plugins/awesome-flickr-gallery-plugin/\">Rate this plugin</a> |" .
         " <a href=\"http://www.ronakg.com/discussions/\">Support Forums</a> |" .
-        " <a href=\"http://wordpress.org/extend/plugins/awesome-flickr-gallery-plugin/changelog/\">Changelog</a> |" .
+        " <a href=\"https://github.com/ronakg/Awesome-Flickr-Gallery/wiki/Changelog\">Changelog</a> |" .
         " <a href=\"http://www.ronakg.com/photos/\">Live Demo</a>" .
     " </h4>";
     return $return_str;
@@ -295,7 +304,10 @@ function afg_generate_gallery_settings_table() {
         <td><select name='afg_slideshow_option' id='afg_slideshow_option'>
         " . afg_generate_options($afg_slideshow_map, 'default', True, $afg_slideshow_map[get_option('afg_slideshow_option')]) . "
     </select></td>
-            <td><font size='2'></font></td>
+            <td><font size='2'><b>HighSlide is NOT FREE for Commercial websites</b>.  If you are using
+            <i>Awesome Flickr Gallery</i> on a commercial website, you need to purchase a license from their website
+            <a href='http://highslide.com/#licence' target='_blank'>here</a>.  If you want a free slideshow,
+            use ColorBox instead.</font></td>
             </tr>
 
         <tr valign='top'>
