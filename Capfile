@@ -93,7 +93,7 @@ run "mysql -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressa
 	desc "Push all images from local, backup remote images, and copy local images into remote install"
 	task :push_uploads_to_remote do
 	end
-	
+
 	# You'll need to set up config[:local_file_path] to map to your local WordPress directory
 	desc "Pull all images from staging, backup local images, and copy staging images into local install"
 	task :pull_uploads_to_local do

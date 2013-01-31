@@ -1,3 +1,3 @@
 #!/bin/bash
-source ~/Dropbox/secrets.sh
-mysql -u redingerdressage -p$REDINGERDRESSAGE_MYSQL_PASSWORD redingerdressage < rd.redinger.me.sql
+$DB_PASSWORD=`grep DB_PASSWORD .htaccess | cut -d" " -f3`
+mysql -u redingerdressage -p$DB_PASSWORD redingerdressage < rd.redinger.me.sql
